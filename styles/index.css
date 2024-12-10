@@ -1,0 +1,173 @@
+@font-face {
+  font-family: "RedHat";
+  src: url(../assets/fonts/static/RedHatText-Regular.woff) format('woff'), url(../assets/fonts/static/RedHatText-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RedHat";
+  src: url(../assets/fonts/static/RedHatText-SemiBold.woff) format('woff'), url(../assets/fonts/static/RedHatText-SemiBold.ttf) format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RedHat";
+  src: url(../assets/fonts/static/RedHatText-Bold.woff) format('woff'), url(../assets/fonts/static/RedHatText-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --font-family: 'RedHat';
+  --primary-color: hsl(35, 55%, 96%);
+  --accent-color: hsl(0, 26%, 25%);
+  --text-color-1: hsl(0, 0%, 0%);
+  --text-color-2: hsl(14, 86%, 42%);
+  --text-color-3: hsl(0, 0%, 50%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--primary-color);
+}
+
+.layout {
+  display: flex;
+  padding: 5rem;
+}
+
+.container {
+  width: 100%;
+}
+
+.container .items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.container .title {
+  font-size: 32px;
+}
+
+.container .items .item-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.container .items .item-card .image-button {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container .items .item-card .image-button img {
+  width: 20rem;
+  height: auto;
+  border-radius: 8px;
+}
+
+.container .items .item-card .add-to-cart-button {
+  position: absolute;
+  width: 60%;
+  top: 92%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border: 1px solid var(--accent-color);
+  border-radius: 20px;
+  background-color: hsl(0, 0%, 100%);
+  box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  -webkit-transition: transform 0.3s ease;
+  -moz-transition: transform 0.3s ease;
+  -ms-transition: transform 0.3s ease;
+  -o-transition: transform 0.3s ease;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.container .items .item-card .add-to-cart-button:hover {
+  transform: translateX(-50%) scale(1.05);
+  -webkit-transform: translateX(-50%) scale(1.05);
+  -moz-transform: translateX(-50%) scale(1.05);
+  -ms-transform: translateX(-50%) scale(1.05);
+  -o-transform: translateX(-50%) scale(1.05);
+}
+
+.container .items .item-card .add-to-cart-button img {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.container .items .item-card .add-to-cart-button span {
+  width: 100%;
+}
+
+.container .sub-text {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.container .sub-text small {
+  color: var(--text-color-3);
+}
+
+.container .sub-text .sub-title {
+  color: var(--text-color-1);
+  font-weight: 600;
+}
+
+.container .sub-text .price {
+  color: var(--text-color-2);
+  font-weight: 600;
+}
+
+.cart {
+  width: 100%;
+}
+
+.cart .card {
+  background-color: hsl(0, 0%, 100%);
+  width: 100%;
+  padding: 1rem;
+  margin-left: 2rem;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.cart .card .title {
+  color: var(--text-color-2);
+}
+
+.cart .card .empty-cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
