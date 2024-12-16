@@ -227,7 +227,7 @@ body {
 
 .cart .card .filled-cart img {
   padding: 2px;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   border-radius: 100%;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;
