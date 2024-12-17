@@ -1,7 +1,9 @@
 let selectedMenu = [];
 
 const fetchMenus = async () => {
-  const response = await fetch("../data.json");
+  const response = await fetch(
+    "https://faris-rafi.github.io/product-list-with-cart-main_frontend-mentor/data.json"
+  );
 
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
