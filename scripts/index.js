@@ -17,7 +17,21 @@ const fetchMenus = async () => {
     itemCard.innerHTML = `
       <div id="${menu.id}-image-button" class="image-button">
         <img
+          id="${menu.id}-img-desktop"
+          class="img-desktop"
           src="${menu.image.desktop}"
+          alt="Waffle"
+        />
+        <img
+          id="${menu.id}-img-tablet"
+          class="img-tablet"
+          src="${menu.image.tablet}"
+          alt="Waffle"
+        />
+        <img
+          id="${menu.id}-img-mobile"
+          class="img-mobile"
+          src="${menu.image.mobile}"
           alt="Waffle"
         />
         <button
@@ -32,7 +46,7 @@ const fetchMenus = async () => {
       <div class="sub-text">
         <small>${menu.category}</small>
         <span class="sub-title">${menu.name}</span>
-        <span class="price">$ ${menu.price.toFixed(2)}</span>
+        <span class="price">$${menu.price.toFixed(2)}</span>
       </div>
     `;
 
@@ -43,21 +57,38 @@ const fetchMenus = async () => {
 fetchMenus();
 
 const addToCart = (menu, type) => {
+  const selectedImageDesktop = document.getElementById(
+    `${menu.id}-img-desktop`
+  );
+  const selectedImageTablet = document.getElementById(`${menu.id}-img-tablet`);
+  const selectedImageMobile = document.getElementById(`${menu.id}-img-mobile`);
   const existingItem = selectedMenu.find((item) => item.id === menu.id);
 
   if (existingItem) {
     if (type === "increment") {
       existingItem.quantity += 1;
+      selectedImageDesktop.classList.add("selected-item");
+      selectedImageTablet.classList.add("selected-item");
+      selectedImageMobile.classList.add("selected-item");
     } else if (type === "decrement") {
       existingItem.quantity -= 1;
 
       if (existingItem.quantity <= 0) {
         selectedMenu = selectedMenu.filter((item) => item.id !== menu.id);
+        selectedImageDesktop.classList.remove("selected-item");
+        selectedImageTablet.classList.remove("selected-item");
+        selectedImageMobile.classList.remove("selected-item");
       }
     } else {
       selectedMenu = selectedMenu.filter((item) => item.id !== menu.id);
+      selectedImageDesktop.classList.remove("selected-item");
+      selectedImageTablet.classList.remove("selected-item");
+      selectedImageMobile.classList.remove("selected-item");
     }
   } else {
+    selectedImageDesktop.classList.add("selected-item");
+    selectedImageTablet.classList.add("selected-item");
+    selectedImageMobile.classList.add("selected-item");
     selectedMenu.push({
       ...menu,
       quantity: 1,
@@ -151,10 +182,10 @@ const addToCart = (menu, type) => {
             <span class="menu-name">${item.name}</span>
             <div class="price">
               <span class="quantity">${item.quantity}x</span>
-              <span>@ $ ${item.price.toFixed(2)}</span>
-              <span class="total-price">$ ${(
-                item.quantity * item.price
-              ).toFixed(2)}</span>
+              <span>@ $${item.price.toFixed(2)}</span>
+              <span class="total-price">$${(item.quantity * item.price).toFixed(
+                2
+              )}</span>
             </div>
           </div>
           <img
@@ -184,7 +215,7 @@ const addToCart = (menu, type) => {
     totalCartDiv.innerHTML = `
       <div class="price">
         <span>Order Total</span>
-        <h2>$ ${totalPrice.toFixed(2)}</h2>
+        <h2>$${totalPrice.toFixed(2)}</h2>
       </div>
       <div class="delivery">
         <img
@@ -193,7 +224,7 @@ const addToCart = (menu, type) => {
         />
         <span>This is a <b>carbon-neutral</b> delivery</span>
       </div>
-      <button class="cart-button">Confirm Order</button>
+      <button class="cart-button" onclick='openModal()'>Confirm Order</button>
     `;
   } else {
     const emptyCart = document.createElement("div");
@@ -212,4 +243,61 @@ const addToCart = (menu, type) => {
     filledCart.innerHTML = ``;
     totalCartDiv.innerHTML = ``;
   }
+};
+
+const openModal = () => {
+  const layout = document.getElementById("layout");
+  const backdropModal = document.getElementById("backdrop-modal");
+  const cartModal = document.getElementById("cart-modal");
+  const itemWrapper = document.getElementById("item-wrapper");
+  const totalPrice = document.getElementById("total-price");
+  layout.classList.add("no-scroll");
+  backdropModal.style.display = "flex";
+  cartModal.style.display = "flex";
+
+  let total = 0;
+  let html = ``;
+
+  selectedMenu.map((menu) => {
+    total += menu.quantity * menu.price;
+    html += `
+      <div class="item">
+        <div class="menu">
+          <img
+            src="${menu.image.thumbnail}"
+            alt="${menu.name}"
+          />
+          <div class="menu-detail">
+            <p class="menu-name">${menu.name}</p>
+            <div class="menu-quantity">
+              <span>${menu.quantity}x</span>
+              <span class="menu-price">@ $${menu.price.toFixed(2)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="total-menu-price">
+          <p>$${(menu.quantity * menu.price).toFixed(2)}</p>
+        </div>
+      </div>
+      <hr class="divider" />
+    `;
+  });
+
+  itemWrapper.innerHTML = html;
+
+  totalPrice.innerHTML = `
+    <span>Order Total</span>
+    <h2>$${total.toFixed(2)}</h2>
+  `;
+};
+
+const closeModal = () => {
+  const layout = document.getElementById("layout");
+  const backdropModal = document.getElementById("backdrop-modal");
+  const cartModal = document.getElementById("cart-modal");
+  layout.classList.remove("no-scroll");
+  backdropModal.style.display = "none";
+  cartModal.style.display = "none";
+
+  selectedMenu.map((menu) => addToCart(menu, "delete"));
 };
